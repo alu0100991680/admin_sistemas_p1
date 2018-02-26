@@ -169,15 +169,16 @@ echo "[setGID] ????"
 chmod 2770 /export/proyectos/Aeropuerto
 chmod 2770 /export/proyectos/CentroComercial
 chmod 2770 /export/proyectos/Parque
-#echo "[ACL+getfacl] MOSTRAR ESTADO ACL DEL DIRECTORIO COMUN"
-#getfacl /export/proyectos/Comun
-#echo "[groupadd] CREAMOS LOS GRUPOS PARA LOS EJECUTIVOS. CON PERMISOS MAS RESTRICTIVOS"
-#groupadd EjecAeropuerto
-#groupadd EjecParque
-#groupadd EjecCentroComercial
-#echo "[usermod] ASOCIAMOS LOS EJECUTIVOS A LOS NUEVOS GRUPOS"
-#usermod -a -G EjecAeropuerto ejec1
-#usermod -a -G EjecAeropuerto ejec2
-#usermod -a -G EjecParque ejec1
-#usermod -a -G EjecCentroComercial ejec2
-
+echo "[ACL+setfacl] LIMPIAMOS ACL"
+setfacl -b -k -R /export/proyectos/Areopuerto
+setfacl -b -k -R /export/proyectos/CentroComercial
+setfacl -b -k -R /export/proyectos/Parque
+echo "[ACL+setfacl] ASOCIAMOS ACL CON LOS NUEVOS GRUPOS PARA EJECUTIVOS"
+setfacl -m g:EjectutivoAreopuerto:---­/export/proyectos/Areopuerto
+setfacl -m g:EjectutivoCentroComercial:---­/export/proyectos/CentroComercial
+setfacl -m g:EjectutivoParque:---­/export/proyectos/Parque
+echo "[cp ls] COPIAMOS ls PARA CADA UNO DE LOS DELEGADOS"
+cp /bin/ls /bin/ls_areopuerto
+cp /bin/ls /bin/ls_centrocomercial
+cp /bin/ls /bin/ls_parque
+echo "[]CAMBIAMOS LOS GRUPOS PARA ls"

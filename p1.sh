@@ -1,3 +1,4 @@
+
 echo "[del -r] LIMPIAR USUARIOS PREVIOS Y SUS DIRECTORIOS HOME"
 userdel -r usu1
 userdel -r usu2
@@ -60,4 +61,10 @@ chmod o= /home/usu5
 chmod u=rwx /home/usu6
 chmod g= /home/usu6
 chmod o= /home/usu6
-
+echo "[mkdir] CREAMOS DIRECTORIOS PARA LOS PROYECTOS"
+mkdir /export
+mkdir /export/proyectos
+mkdir /export/proyectos/Aeropuerto
+mkdir /export/proyectos/CentroComercial
+mkdir /export/proyectos/Parque
+mkdir /export/proyectos/Comun

@@ -1,3 +1,4 @@
+clear
 echo " ------------ "
 echo "| PRÁCTICA 1 |"
 echo " ------------ "
@@ -33,6 +34,8 @@ groupdel Eaeropuerto
 groupdel Ecentrocomercial
 groupdel Eparque
 groupdel Comun
+echo "[rm ls_*] ELIMINAMOS LOS LS PREVIOS"
+rm /usr/local/bin/ls_*
 echo ""
 echo " ------------------ "
 echo "| MONTANDO ESQUEMA |"
@@ -120,7 +123,7 @@ setquota -u usu5 51200 60000 0 0 /home
 setquota -u usu6 51200 60000 0 0 /home
 echo "··Establecimiento de tiempo de gracia"
 echo "··NOTA: Editar mediante edquota -t para globales. Ejemplo 2days 2days"
-echo "        Editar mediante edquota -u <usuario> -t para usuario concreto. Ejemplo 2days 2days"
+echo "        Editar mediante edquota -u <usuario> -t para usuario concreto. Ejemplo:"
 echo "        /dev/mapper/sistema-home     2days    2days"
 echo " -------------------------------- "
 echo "| CREANDO ESPACIO PARA PROYECTOS |"
@@ -170,7 +173,7 @@ usermod -a -G Comun usu4
 usermod -a -G Comun usu5
 usermod -a -G Comun usu6
 echo "[setGID] AÑADIMOS SETGID(SUID PARA CARPETAS) AL GRUPO"
-chmod 2770 /export/proyectos/Aeropuerto
+chmod 2770 /export/proyectos/Aeropuerto # Tambien pordria ponerse chmod 770 /../. y luego chmod g+t /../.
 chmod 2770 /export/proyectos/CentroComercial
 chmod 2770 /export/proyectos/Parque
 echo "[setUID a otros] SOLO PERMITIMOS QUE EL PROPIETARIO PUEDA ELIMINAR SUS PROPIOS CONTENIDOS DENTROS DE COMUN"
@@ -184,18 +187,23 @@ setfacl -b -k -R /export/proyectos/Aeropuerto
 setfacl -b -k -R /export/proyectos/CentroComercial
 setfacl -b -k -R /export/proyectos/Parque
 echo "[ACL+setfacl] ASOCIAMOS ACL CON LOS NUEVOS GRUPOS PARA EJECUTIVOS"
-setfacl -m g:EjecutivoAeropuerto:x­/export/proyectos/Aeropuerto
-setfacl -m g:EjecutivoCentroComercial:x­/export/proyectos/CentroComercial
-setfacl -m g:EjecutivoParque:x­/export/proyectos/Parque
+setfacl -m g:Eaeropuerto:r-x /export/proyectos/Aeropuerto
+setfacl -m g:Ecentrocomercial:r-x /export/proyectos/CentroComercial
+setfacl -m g:Eparque:r-x /export/proyectos/Parque
 echo "[cp ls] COPIAMOS ls PARA CADA UNO DE LOS DELEGADOS"
 cp /bin/ls /usr/local/bin/ls_aeropuerto
 cp /bin/ls /usr/local/bin/ls_centrocomercial
 cp /bin/ls /usr/local/bin/ls_parque
+
+# HASTA AQUI PARECE QUE TODO FUNCIONA CORRECTAMENTE
+# EL LS NO TERMINA DE FUNCIONAR
+
 echo "[chgrp] CAMBIAMOS LOS GRUPOS PARA ls"
-chgrp Eaeropuerto /usr/local/bin/ls_areopuerto
+chgrp Eaeropuerto /usr/local/bin/ls_aeropuerto
 chgrp Ecentrocomercial /usr/local/bin/ls_centrocomercial
 chgrp Eparque /usr/local/bin/ls_parque
 echo "[ACL+ls] AÑADIMOS LOS PERMISOS NECESARIOS A LOS ls por medio de ACL"
-setfacl -m g:Eaeropuerto:x /usr/local/bin/ls_aeropuerto
-setfacl -m g:Ecentrocomercial:x /usr/local/bin/ls_centrocomercial
-setfacl -m g:Eparque:x /usr/local/bin/ls_parque
+setfacl -m g:Eaeropuerto:--x /usr/local/bin/ls_aeropuerto
+setfacl -m g:Ecentrocomercial:--x /usr/local/bin/ls_centrocomercial
+setfacl -m g:Eparque:--x /usr/local/bin/ls_parque
+echo "[FIN]"

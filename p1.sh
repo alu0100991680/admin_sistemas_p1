@@ -169,20 +169,13 @@ usermod -a -G Comun usu3
 usermod -a -G Comun usu4
 usermod -a -G Comun usu5
 usermod -a -G Comun usu6
-echo "[setGID] ????"
-#chmod g+w /export/proyectos/Aeropuerto
-#chmod g+w /export/proyectos/CentroComercial
-#chmod g+w /export/proyectos/Parque
-#chmod o+r,o+x /export/proyectos/Aeropuerto
-#chmod o+r,o+x /export/proyectos/CentroComercial
-#chmod o+r,o+x /export/proyectos/Parque
+echo "[setGID] AÑADIMOS SETGID(SUID PARA CARPETAS) AL GRUPO"
 chmod 2770 /export/proyectos/Aeropuerto
 chmod 2770 /export/proyectos/CentroComercial
 chmod 2770 /export/proyectos/Parque
-echo "[chmod+sticky] SOLO PERMITIMOS QUE EL PROPIETARIO PUEDA ELIMINAR SUS PROPIOS CONTENIDOS DENTROS DE COMUN"
+echo "[setUID a otros] SOLO PERMITIMOS QUE EL PROPIETARIO PUEDA ELIMINAR SUS PROPIOS CONTENIDOS DENTROS DE COMUN"
 chmod 770 /export/proyectos/Comun # Cuidado con el orden en que se definen los permisos en conjunto con StickyBit
-chmod o+t /export/proyectos/Comun
-#chmod 2770 /export/proyectos/Comun
+chmod o+t /export/proyectos/Comun # o chmod 1770... (lo mismo pero en una sola linea)
 echo " ------------ "
 echo "| EJECUTIVOS |"
 echo " ------------ "

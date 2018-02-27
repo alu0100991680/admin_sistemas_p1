@@ -199,11 +199,18 @@ cp /bin/ls /usr/local/bin/ls_parque
 # EL LS NO TERMINA DE FUNCIONAR
 
 echo "[chgrp] CAMBIAMOS LOS GRUPOS PARA ls"
+
+# Aqui serian grupos NO EJECUTIVO
 chgrp Eaeropuerto /usr/local/bin/ls_aeropuerto
 chgrp Ecentrocomercial /usr/local/bin/ls_centrocomercial
 chgrp Eparque /usr/local/bin/ls_parque
-echo "[ACL+ls] AÑADIMOS LOS PERMISOS NECESARIOS A LOS ls por medio de ACL"
-setfacl -m g:Eaeropuerto:--x /usr/local/bin/ls_aeropuerto
-setfacl -m g:Ecentrocomercial:--x /usr/local/bin/ls_centrocomercial
-setfacl -m g:Eparque:--x /usr/local/bin/ls_parque
+
+
+
+
+
+#echo "[ACL+ls] AÑADIMOS LOS PERMISOS NECESARIOS A LOS ls por medio de ACL"
+#setfacl -m g:Eaeropuerto:--x /usr/local/bin/ls_aeropuerto
+#setfacl -m g:Ecentrocomercial:--x /usr/local/bin/ls_centrocomercial
+#setfacl -m g:Eparque:--x /usr/local/bin/ls_parque
 echo "[FIN]"
